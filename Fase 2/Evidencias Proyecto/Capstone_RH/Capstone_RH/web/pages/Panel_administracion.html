@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Panel de Administración — RH Digital</title>
+    <link rel="stylesheet" href="../css/panel_administracion.css">
+</head>
+
+<body class="admin-theme">
+    <!-- ===== HEADER ===== -->
+    <header class="admin-header" role="banner">
+        <div class="header-left">
+            <h1 class="app-title">Panel de Administración</h1>
+        </div>
+        <div class="header-right" aria-label="Usuario">
+            <span class="user-meta">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor"
+                        d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2m0 7c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-2.97 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1" />
+                </svg>
+                <strong id="uName">María Pérez</strong> · <span id="uRole">RRHH</span>
+            </span>
+            <button type="button" id="btnVolver" class="back-btn" title="Volver" aria-label="Volver">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor" d="M21 11H6.83l3.58-3.59L9 6l-6 6l6 6l1.41-1.42L6.83 13H21z" />
+                </svg>
+                Volver
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== LAYOUT GENERAL ===== -->
+    <div class="app-layout">
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="sidebar" role="complementary">
+            <nav class="side-nav access" aria-label="Módulos principales">
+                <button class="access-btn active" data-target="dashboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M22 21H2V3h2v16h2v-9h4v9h2V6h4v13h2v-5h4z" />
+                    </svg>
+                    Dashboard
+                </button>
+
+                <button class="access-btn" data-target="empleados">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                            d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9A3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42c-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3a3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3a3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9c-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65c2.56.34 4.45 1.51 4.45 2.9z" />
+                    </svg>
+                    Empleados
+                </button>
+
+                <button class="access-btn" data-target="contratos">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                            d="M20 18H4V8h16m0-2h-8l-2-2H4c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2" />
+                    </svg>
+                    Contratos y Anexos
+                </button>
+
+                <button class="access-btn" data-target="liquidaciones">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                            d="M7 15h2c0 1.08 1.37 2 3 2s3-.92 3-2c0-1.1-1.04-1.5-3.24-2.03C9.64 12.44 7 11.78 7 9c0-1.79 1.47-3.31 3.5-3.82V3h3v2.18C15.53 5.69 17 7.21 17 9h-2c0-1.08-1.37-2-3-2s-3 .92-3 2c0 1.1 1.04 1.5 3.24 2.03C14.36 11.56 17 12.22 17 15c0 1.79-1.47 3.31-3.5 3.82V21h-3v-2.18C8.47 18.31 7 16.79 7 15" />
+                    </svg>
+                    Liquidaciones
+                </button>
+
+                <button class="access-btn" data-target="asistencia">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                            d="M12 20a7 7 0 0 1-7-7a7 7 0 0 1 7-7a7 7 0 0 1 7 7a7 7 0 0 1-7 7m0-16a9 9 0 0 0-9 9a9 9 0 0 0 9 9a9 9 0 0 0 9-9a9 9 0 0 0-9-9m.5 4H11v6l4.75 2.85l.75-1.23l-4-2.37z" />
+                    </svg>
+                    Asistencia
+                </button>
+
+                <button class="access-btn" data-target="capacitaciones">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                            d="M12 3L1 9l11 6l9-4.91V17h2V9L12 3Zm0 13L5 12.18V16L12 19l7-3v-3.82L12 16Z" />
+                    </svg>
+                    Capacitaciones
+                </button>
+
+                <button class="access-btn" data-target="solicitudes">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                            d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2h7v5h5v11H6zm2 8v2h8v-2zm0 4v2h5v-2z" />
+                    </svg>
+                    Solicitudes
+                </button>
+
+                <button class="access-btn" data-target="reportes">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                            d="M8.27 3L3 8.27v7.46L8.27 21h7.46C17.5 19.24 21 15.73 21 15.73V8.27L15.73 3M9.1 5h5.8L19 9.1v5.8L14.9 19H9.1L5 14.9V9.1m6 5.9h2v2h-2zm0-8h2v6h-2z" />
+                    </svg>
+                    Reportes
+                </button>
+
+                <button class="access-btn" data-target="configuracion">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                            d="M12 15.5A3.5 3.5 0 0 1 8.5 12A3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5a3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97s-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1s.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64z" />
+                    </svg>
+                    Configuración
+                </button>
+            </nav>
+
+            <div class="logout-area">
+                <button type="button" class="logout-btn" id="btnLogout" title="Cerrar sesión"
+                    aria-label="Cerrar sesión">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                        aria-hidden="true">
+                        <path fill="currentColor"
+                            d="M19 3H5c-1.11 0-2 .89-2 2v4h2V5h14v14H5v-4H3v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-8.92 12.58L11.5 17l5-5l-5-5l-1.42 1.41L12.67 11H3v2h9.67z" />
+                    </svg>
+                    Cerrar sesión
+                </button>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main app-content" role="main">
+            <!-- DASHBOARD -->
+            <section id="dashboard" class="content active" tabindex="-1">
+                <header class="section-head dash-head">
+                    <div class="dash-left">
+                        <h2>Dashboard</h2>
+                        <p class="muted">
+                            Resumen general de empleados, contratos y liquidaciones del último período.
+                        </p>
+                    </div>
+
+                    <div class="dash-period-toolbar">
+                        <label for="dash_period" class="dash-period-label">Período</label>
+                        <input type="month" id="dash_period" class="dash-period-input">
+
+                        <button id="dash_apply" class="btn small primary">Aplicar</button>
+                        <button id="dash_refresh" class="btn small ghost">Recargar</button>
+                    </div>
+                </header>
+
+                <p id="dashError" class="small dash-error"></p>
+
+                <div class="dash-grid">
+                    <!-- Card: Empleados -->
+                    <article class="panel card">
+                        <h3 class="panel-title">Empleados</h3>
+                        <p class="small muted">Estado general de la dotación.</p>
+
+                        <div class="metric-row">
+                            <span>Total</span>
+                            <strong id="dash_emp_total">—</strong>
+                        </div>
+                        <div class="metric-row">
+                            <span>Con contrato vigente</span>
+                            <strong id="dash_emp_con_vig">—</strong>
+                        </div>
+                        <div class="metric-row">
+                            <span>Sin contrato vigente</span>
+                            <strong id="dash_emp_sin_vig">—</strong>
+                        </div>
+                    </article>
+
+                    <!-- Card: Contratos -->
+                    <article class="panel card">
+                        <h3 class="panel-title">Contratos</h3>
+                        <p class="small muted">Contratos registrados en el sistema.</p>
+
+                        <div class="metric-row">
+                            <span>Total</span>
+                            <strong id="dash_ctr_total">—</strong>
+                        </div>
+                        <div class="metric-row">
+                            <span>Vigentes</span>
+                            <strong id="dash_ctr_vigentes">—</strong>
+                        </div>
+                        <div class="metric-row">
+                            <span>Sueldo promedio (vigentes)</span>
+                            <strong id="dash_ctr_prom">—</strong>
+                        </div>
+                        <div class="metric-row">
+                            <span>Sueldo mínimo</span>
+                            <strong id="dash_ctr_min">—</strong>
+                        </div>
+                        <div class="metric-row">
+                            <span>Sueldo máximo</span>
+                            <strong id="dash_ctr_max">—</strong>
+                        </div>
+                    </article>
+
+                    <!-- Card: Liquidaciones del período -->
+                    <article class="panel card">
+                        <h3 class="panel-title">Liquidaciones del período</h3>
+                        <p class="small muted">
+                            Promedio de sueldo líquido y cantidad de liquidaciones generadas.
+                        </p>
+
+                        <div class="metric-row">
+                            <span>Período</span>
+                            <strong id="dash_liq_period">—</strong>
+                        </div>
+                        <div class="metric-row">
+                            <span>Promedio sueldo líquido</span>
+                            <strong id="dash_liq_prom">—</strong>
+                        </div>
+                        <div class="metric-row">
+                            <span>Cantidad de liquidaciones</span>
+                            <strong id="dash_liq_cant">—</strong>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Card asistencia -->
+                <article class="kpi-card">
+                    <h3>Asistencia del período</h3>
+                    <p class="kpi-sub" id="dash_asis_period">Periodo —</p>
+
+                    <p class="kpi-main" id="dash_asis_pct">— %</p>
+                    <p class="kpi-sub">
+                        Registros de asistencia: <strong id="dash_asis_total">—</strong>
+                    </p>
+
+                    <div id="dash_asis_estados" class="small" style="margin-top:8px;">
+                    </div>
+                </article>
+            </section>
+
+            <!-- EMPLEADOS -->
+            <section id="empleados" class="content" tabindex="-1">
+                <h2>Empleados</h2>
+                <p>Gestión de empleados, fichas y documentos.</p>
+
+                <!-- Filtros -->
+                <div class="toolbar" id="empToolbar">
+                    <div class="row">
+                        <input id="emp_q" type="search" placeholder="Buscar por nombre, RUT, cargo…" />
+                        <select id="emp_estado">
+                            <option value="">Todos los estados</option>
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                        </select>
+                        <select id="emp_rol">
+                            <option value="">Todos los roles</option>
+                            <option value="empleado">Empleado</option>
+                            <option value="rrhh">RRHH</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                        <button id="emp_clear" class="btn ghost">Limpiar</button>
+                    </div>
+                </div>
+
+                <!-- Botón que abre el popup -->
+                <div style="margin:10px 0;">
+                    <button id="empAddToggle" class="btn small">+ Agregar empleado</button>
+                </div>
+
+                <!-- LISTA EMPLEADOS -->
+                <div id="empListContainer" class="docs-container">
+                    <div class="muted">Cargando empleados…</div>
+                </div>
+
+                <!-- Paginador empleados -->
+                <div id="empPager"
+                    style="display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px">
+                    <button id="empPrev" class="btn small ghost" type="button" disabled>
+                        Anterior
+                    </button>
+                    <span id="empPageInfo" class="small" style="color:#64748b">
+                        Página 1 de 1
+                    </span>
+                    <button id="empNext" class="btn small" type="button" disabled>
+                        Siguiente
+                    </button>
+                </div>
+            </section>
+
+            <!-- CONTRATOS -->
+            <section id="contratos" class="content" tabindex="-1">
+                <h2>Contratos y Anexos</h2>
+                <p>Gestión de contratos y anexos vigentes o finalizados.</p>
+
+                <div id="docSumary" class="small muted">-</div>
+                <div class="doc-toolbar">
+                    <div id="docSummary" class="muted"></div>
+                </div>
+                <div id="docsListContainer" class="mt-2">
+                    <div class="muted">Cargando documentos…</div>
+                </div>
+            </section>
+
+            <!-- LIQUIDACIONES -->
+            <section id="liquidaciones" class="content" tabindex="-1">
+                <header class="section-head">
+                    <div>
+                        <h2>Liquidaciones</h2>
+                        <p class="muted" style="margin:4px 0 0;font-size:0.9rem;">
+                            Genera y revisa las liquidaciones de sueldo por período.
+                        </p>
+                    </div>
+
+                    <!-- Pill del MES (mismo estilo que asistencia) -->
+                    <div class="asis-month-pill">
+                        <span class="asis-month-label">Periodo</span>
+                        <input type="month" id="liq_period" />
+                    </div>
+                </header>
+
+                <!-- Toolbar de filtros + botón Calcular período -->
+                <div class="toolbar liq-toolbar">
+                    <div class="row">
+                        <input id="liq_q" type="search" placeholder="Buscar por nombre, RUT o periodo…" />
+
+                        <select id="liq_estado">
+                            <option value="">Todos los estados</option>
+                            <option value="calculada">Calculada</option>
+                            <option value="revisada">Revisada</option>
+                            <option value="aprobada">Aprobada</option>
+                            <option value="publicada">Publicada</option>
+                        </select>
+
+                        <button id="liq_clear" class="btn small ghost" type="button">
+                            Limpiar filtros
+                        </button>
+
+                        <!-- Botón para generar/recalcular el período -->
+                        <button id="liq_generate_period" class="btn small" type="button">
+                            Calcular período
+                        </button>
+                    </div>
+                    <p class="small muted" style="margin-top:6px;">
+                        El botón <strong>Calcular período</strong> genera o recalcula las
+                        liquidaciones de todos los empleados para el mes seleccionado.
+                    </p>
+                </div>
+
+                <!-- Lista de liquidaciones -->
+                <div id="liqListContainer" class="docs-container">
+                    <div class="muted">Cargando liquidaciones…</div>
+                </div>
+
+                <!-- Paginador liquidaciones -->
+                <div id="liqPager"
+                    style="display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px">
+                    <button id="liqPrev" class="btn small ghost" type="button" disabled>
+                        Anterior
+                    </button>
+                    <span id="liqPageInfo" class="small" style="color:#64748b">
+                        Página 1 de 1
+                    </span>
+                    <button id="liqNext" class="btn small" type="button" disabled>
+                        Siguiente
+                    </button>
+                </div>
+            </section>
+
+            <!-- ASISTENCIA -->
+            <section id="asistencia" class="content" tabindex="-1">
+                <header class="section-head">
+                    <div>
+                        <h2>Asistencia</h2>
+                        <p class="muted" style="margin:4px 0 0;font-size:0.9rem;">
+                            Revisa y edita la asistencia de todos los empleados por mes.
+                        </p>
+                    </div>
+
+                    <!-- Pill del MES -->
+                    <div class="asis-month-pill">
+                        <span class="asis-month-label">Mes</span>
+                        <input type="month" id="asis_period" />
+                    </div>
+                </header>
+
+                <!-- Toolbar de filtros -->
+                <div class="toolbar asis-toolbar">
+                    <div class="row">
+                        <input id="asis_q" type="search" placeholder="Buscar por nombre, RUT o cargo…" />
+
+                        <select id="asis_estado">
+                            <option value="">Todos los estados</option>
+                            <option value="presente">Presente</option>
+                            <option value="falta">Falta</option>
+                            <option value="licencia">Licencia</option>
+                            <option value="vacaciones">Vacaciones</option>
+                        </select>
+
+                        <button id="asis_clear" class="btn small ghost" type="button">
+                            Limpiar filtros
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Lista de asistencias -->
+                <div id="asisListContainer" class="docs-container">
+                    <div class="muted">Cargando asistencia…</div>
+                </div>
+
+                <!-- Paginador asistencia -->
+                <div id="asisPager"
+                    style="display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px">
+                    <button id="asisPrev" class="btn small ghost" type="button" disabled>
+                        Anterior
+                    </button>
+                    <span id="asisPageInfo" class="small" style="color:#64748b">
+                        Página 1 de 1
+                    </span>
+                    <button id="asisNext" class="btn small" type="button" disabled>
+                        Siguiente
+                    </button>
+                </div>
+            </section>
+
+            <!-- CAPACITACIONES -->
+            <section id="capacitaciones" class="content" tabindex="-1">
+                <h2>Capacitaciones</h2>
+                <p>Registro, asignación y certificados de capacitaciones.</p>
+                <div id="capListContainer" class="docs-container">
+                    <div class="muted">Cargando capacitaciones…</div>
+                </div>
+            </section>
+
+            <!-- SOLICITUDES -->
+            <section id="solicitudes" class="content" aria-labelledby="sol-title" tabindex="-1">
+                <header style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+                    <div>
+                        <h2 id="sol-title">Solicitudes</h2>
+                        <p class="muted" style="margin:4px 0 0;font-size:0.9rem;">
+                            Revisa y gestiona las solicitudes de los empleados (vacaciones,
+                            permisos, licencias, etc.).
+                        </p>
+                    </div>
+                </header>
+
+                <!-- Toolbar de filtros -->
+                <div class="toolbar" style="margin-top:14px;">
+                    <div class="row">
+                        <input id="sol_q" type="search" placeholder="Buscar por empleado, tipo o motivo" />
+                        <select id="sol_estado">
+                            <option value="">Todos los estados</option>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="en revisión">En revisión</option>
+                            <option value="aprobada">Aprobada</option>
+                            <option value="rechazada">Rechazada</option>
+                        </select>
+                        <select id="sol_tipo">
+                            <option value="">Todos los tipos</option>
+                            <option value="vacaciones">Vacaciones</option>
+                            <option value="permiso">Permiso</option>
+                            <option value="licencia">Licencia médica</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                        <button id="sol_clear" class="btn small" type="button">
+                            Limpiar filtros
+                        </button>
+                    </div>
+                </div>
+
+                <div id="solListContainer" class="docs-container" style="margin-top:10px;">
+                    <div class="muted">Cargando solicitudes…</div>
+                </div>
+
+                <div id="solPager"
+                    style="display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:12px;">
+                    <button id="solPrev" class="btn small" type="button" disabled>
+                        Anterior
+                    </button>
+                    <span id="solPageInfo" class="small muted">Página 1 de 1</span>
+                    <button id="solNext" class="btn small" type="button" disabled>
+                        Siguiente
+                    </button>
+                </div>
+            </section>
+
+            <section id="reportes" class="content" tabindex="-1">
+                <header class="section-head">
+                    <div>
+                        <h2>Reportes</h2>
+                        <p class="muted" style="margin:4px 0 0;font-size:0.9rem;">
+                            Análisis histórico de empleados, contratos, liquidaciones y asistencia.
+                        </p>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
+                        <!-- Selector de gráfico -->
+                        <div style="display:flex; gap:8px; align-items:center;">
+                            <label for="rep_chart_selector" class="small muted">Gráfico</label>
+                            <select id="rep_chart_selector"
+                                style="padding:6px 8px; border-radius:8px; border:1px solid #d1d5db; font-size:0.85rem;">
+                                <option value="ctr">Contratos por tipo</option>
+                                <option value="liq">Tendencia sueldo líquido</option>
+                                <option value="emp">Empleados con / sin contrato</option>
+                                <option value="asis">Asistencia por estado</option>
+                            </select>
+                        </div>
+
+                        <!-- Selector de periodo base -->
+                        <div class="asis-month-pill">
+                            <span class="asis-month-label">Periodo base</span>
+                            <input type="month" id="rep_period">
+                        </div>
+                    </div>
+                </header>
+
+                <p id="repError" class="small" style="color:#b91c1c;margin-top:6px;display:none;"></p>
+
+                <div class="toolbar" style="margin:10px 0 16px;display:flex;gap:8px;align-items:center;">
+                    <button id="rep_apply" class="btn small primary">Aplicar</button>
+                    <button id="rep_refresh" class="btn small">Volver al mes actual</button>
+                </div>
+
+                <div class="cards-row">
+                    <!-- CARD / GRAFICO 1: CONTRATOS POR TIPO -->
+                    <article id="rep_card_ctr" class="panel card">
+                        <h3 class="panel-title">Contratos por tipo</h3>
+                        <p class="small muted">
+                            Comparación de contratos vigentes vs finiquitados por tipo.
+                        </p>
+                        <div style="height:260px;margin-top:8px;">
+                            <canvas id="rep_ctr_tipo"></canvas>
+                        </div>
+                    </article>
+
+                    <!-- CARD / GRAFICO 2: TENDENCIA LIQUIDACIONES -->
+                    <article id="rep_card_liq" class="panel card" style="display:none;">
+                        <h3 class="panel-title">Tendencia de sueldo líquido promedio</h3>
+                        <p class="small muted">
+                            Últimos períodos con liquidaciones registradas.
+                        </p>
+                        <div style="height:260px;margin-top:8px;">
+                            <canvas id="rep_liq_trend"></canvas>
+                        </div>
+                    </article>
+
+                    <!-- CARD / GRAFICO 3: EMPLEADOS CON / SIN CONTRATO -->
+                    <article id="rep_card_emp" class="panel card" style="display:none;">
+                        <h3 class="panel-title">Empleados con / sin contrato vigente</h3>
+                        <p class="small muted">
+                            Distribución de la dotación según situación contractual.
+                        </p>
+                        <div style="height:260px;margin-top:8px;">
+                            <canvas id="rep_emp_ctr"></canvas>
+                        </div>
+                    </article>
+
+                    <!-- CARD / GRAFICO 4: ASISTENCIA POR ESTADO -->
+                    <article id="rep_card_asis" class="panel card" style="display:none;">
+                        <h3 class="panel-title">Asistencia por estado</h3>
+                        <p class="small muted">
+                            Registros de asistencia en el periodo por tipo de estado.
+                        </p>
+                        <div style="height:260px;margin-top:8px;">
+                            <canvas id="rep_asis_estado"></canvas>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <!-- FICHA DE SOLICITUD -->
+            <section id="fichaSolicitud" class="content" tabindex="-1">
+                <header class="section-head">
+                    <button id="solVolver" class="btn ghost small" type="button">
+                        ← Volver a solicitudes
+                    </button>
+                    <div>
+                        <h2 id="solTitulo">Solicitud</h2>
+                        <p id="solMeta" class="small muted">
+                            Selecciona una solicitud desde el listado para ver su detalle.
+                        </p>
+                    </div>
+                </header>
+
+                <div id="solResumen" class="ficha-container"></div>
+
+                <hr class="divider" />
+
+                <section class="panel">
+                    <h3 class="panel-title">Resolución de la solicitud</h3>
+
+                    <form id="solResolverForm" class="ficha-form">
+                        <div class="field-group">
+                            <label for="solEstadoInput">Estado de la solicitud</label>
+                            <select id="solEstadoInput" name="estado">
+                                <option value="pendiente">Pendiente</option>
+                                <option value="en revisión">En revisión</option>
+                                <option value="aprobada">Aprobada</option>
+                                <option value="rechazada">Rechazada</option>
+                                <option value="cancelada">Cancelada</option>
+                            </select>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="solRespuestaInput">Respuesta al empleado</label>
+                            <textarea id="solRespuestaInput" name="comentario_resolucion" rows="4"
+                                placeholder="Escribe aquí la respuesta que verá el empleado..."></textarea>
+                        </div>
+
+                        <p id="solResolverMsg" class="small muted"></p>
+
+                        <div class="actions" style="margin-top: 8px; display:flex; gap:8px;">
+                            <button type="submit" class="btn primary small">
+                                Guardar cambios
+                            </button>
+                            <button type="button" class="btn ghost small" id="solCancelarBtn">
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </section>
+
+            <!-- FICHA DE EMPLEADO -->
+            <section id="fichaEmpleado" class="content" tabindex="-1">
+                <header class="emp-head" style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                        <h2 id="fichaNombre">Empleado</h2>
+                        <div class="small" id="fichaMeta">Cargando…</div>
+                    </div>
+                    <button id="fichaVolver" class="back-btn" type="button">
+                        Volver
+                    </button>
+                </header>
+
+                <div id="fichaResumen">
+                    <h3>Datos personales</h3>
+
+                    <ul class="ficha-lista">
+                        <li><span>RUT:</span> <strong id="f_rut">—</strong></li>
+                        <li><span>Fecha de nacimiento:</span>
+                            <strong id="f_nacimiento">—</strong>
+                        </li>
+                        <li><span>Edad:</span> <strong id="f_edad">—</strong></li>
+                        <li><span>Dirección:</span>
+                            <strong id="f_direccion">—</strong>
+                        </li>
+                        <li><span>Teléfono:</span>
+                            <strong id="f_telefono">—</strong>
+                        </li>
+                        <li><span>Correo:</span>
+                            <strong id="f_correo">—</strong>
+                        </li>
+                    </ul>
+
+                    <h3>Previsión</h3>
+                    <ul class="ficha-lista">
+                        <li><span>AFP:</span> <strong id="f_afp">—</strong></li>
+                        <li><span>Salud:</span> <strong id="f_salud">—</strong></li>
+                    </ul>
+                </div>
+
+                <div id="fichaDocs" class="docs-container" style="margin-top:10px;">
+                    <div class="muted">Cargando documentos…</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ============ POPUP – NUEVO EMPLEADO ============ -->
+    <div id="empModalOverlay" style="display:none;">
+        <div id="empModal">
+            <h3>Agregar nuevo empleado</h3>
+
+            <form id="empForm">
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Nombre</label>
+                        <input name="nombre" type="text" required />
+                    </div>
+
+                    <div class="field">
+                        <label>Apellido Paterno</label>
+                        <input name="apellido_paterno" type="text" required />
+                    </div>
+
+                    <div class="field">
+                        <label>Apellido Materno</label>
+                        <input name="apellido_materno" type="text" required />
+                    </div>
+
+                    <div class="field">
+                        <label>RUT</label>
+                        <input name="rut" type="text" placeholder="Sin dígito" required />
+                    </div>
+
+                    <div class="field">
+                        <label>Dígito Verificador</label>
+                        <input name="digito_verificador" type="text" maxlength="1" required />
+                    </div>
+
+                    <div class="field">
+                        <label>Dirección</label>
+                        <input name="direccion" type="text" required />
+                    </div>
+
+                    <div class="field">
+                        <label>Teléfono</label>
+                        <input name="telefono" type="text" required />
+                    </div>
+
+                    <div class="field">
+                        <label>Correo</label>
+                        <input name="correo" type="email" required />
+                    </div>
+
+                    <div class="field">
+                        <label>Fecha ingreso</label>
+                        <input name="fecha_ingreso" type="date" required />
+                    </div>
+
+                    <div class="field">
+                        <label>Cargo</label>
+                        <input name="cargo" type="text" required />
+                    </div>
+
+                    <div class="field">
+                        <label>Sueldo base</label>
+                        <input name="sueldo_base" type="number" required />
+                    </div>
+
+                    <div class="field">
+                        <label>ID AFP</label>
+                        <input name="id_afp" type="number" required />
+                    </div>
+
+                    <div class="field">
+                        <label>ID Salud</label>
+                        <input name="id_salud" type="number" required />
+                    </div>
+
+                    <div class="field">
+                        <label>Fecha de nacimiento</label>
+                        <input name="fecha_nacimiento" type="date" required />
+                    </div>
+                </div>
+
+                <div id="empModalFooter">
+                    <button type="button" class="btn cancel" id="empModalCancel">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn primary">
+                        Guardar empleado
+                    </button>
+                </div>
+
+                <div id="empFormMsg"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============ POPUP – EDITAR ASISTENCIA ============ -->
+    <div id="asisModalOverlay">
+        <div id="asisModal">
+            <h3>Registro de asistencia</h3>
+
+            <form id="asisForm">
+                <!-- ID asistencia oculto -->
+                <input type="hidden" name="id_asistencia" id="asis_id_asistencia" />
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Empleado</label>
+                        <input id="asis_nombre" type="text" readonly />
+                    </div>
+
+                    <div class="field">
+                        <label>Fecha</label>
+                        <input id="asis_fecha" type="date" readonly />
+                    </div>
+
+                    <div class="field">
+                        <label>Hora entrada</label>
+                        <input name="hora_entrada" id="asis_hora_entrada" type="time" />
+                    </div>
+
+                    <div class="field">
+                        <label>Hora salida</label>
+                        <input name="hora_salida" id="asis_hora_salida" type="time" />
+                    </div>
+
+                    <div class="field">
+                        <label>Minutos de colación</label>
+                        <input name="minutos_colacion" id="asis_min_colacion" type="number" min="0" step="5" />
+                    </div>
+
+                    <div class="field">
+                        <label>Horas trabajadas</label>
+                        <input name="horas_trabajadas" id="asis_horas_trab" type="number" min="0" step="0.25" />
+                    </div>
+
+                    <div class="field">
+                        <label>Horas extra</label>
+                        <input name="horas_extra" id="asis_horas_extra" type="number" min="0" step="0.25" />
+                    </div>
+
+                    <div class="field">
+                        <label>Estado</label>
+                        <select name="estado" id="asis_estado_edit">
+                            <option value="presente">Presente</option>
+                            <option value="ausente">Ausente</option>
+                            <option value="licencia">Licencia</option>
+                            <option value="permiso">Permiso</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field" style="margin-top:10px;">
+                    <label>Observación</label>
+                    <textarea name="observacion" id="asis_observacion" rows="3"
+                        placeholder="Comentario o motivo del ajuste…"></textarea>
+                </div>
+
+                <div id="asisModalFooter">
+                    <button type="button" class="btn cancel" id="asisModalCancel">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn primary">
+                        Guardar cambios
+                    </button>
+                </div>
+
+                <div id="asisFormMsg"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============ POPUP – DETALLE LIQUIDACIÓN ============ -->
+    <div id="liqModalOverlay" style="display:none;">
+        <div id="liqModal">
+            <h3>Detalle de liquidación</h3>
+
+            <form id="liqForm">
+                <input type="hidden" id="liq_id_liquidacion" name="id_liquidacion" />
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Empleado</label>
+                        <input id="liq_nombre" type="text" readonly />
+                    </div>
+
+                    <div class="field">
+                        <label>RUT</label>
+                        <input id="liq_rut" type="text" readonly />
+                    </div>
+
+                    <div class="field">
+                        <label>Cargo</label>
+                        <input id="liq_cargo" type="text" readonly />
+                    </div>
+
+                    <div class="field">
+                        <label>Periodo</label>
+                        <input id="liq_periodo" type="text" readonly />
+                    </div>
+
+                    <div class="field">
+                        <label>Días trabajados</label>
+                        <input id="liq_dias_trab" type="number" readonly />
+                    </div>
+
+                    <div class="field">
+                        <label>Imponible</label>
+                        <input id="liq_imponible" type="text" readonly />
+                    </div>
+
+                    <div class="field">
+                        <label>Sueldo líquido</label>
+                        <input id="liq_liquido" type="text" readonly />
+                    </div>
+
+                    <div class="field">
+                        <label>Estado actual</label>
+                        <select id="liq_estado_sel" name="estado">
+                            <option value="calculada">Calculada</option>
+                            <option value="revisada">Revisada</option>
+                            <option value="aprobada">Aprobada</option>
+                            <option value="publicada">Publicada</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field" style="margin-top:10px;">
+                    <label>Observación</label>
+                    <textarea id="liq_observacion" rows="3"></textarea>
+                </div>
+
+                <div id="liqModalFooter">
+                    <button type="button" class="btn cancel" id="liqModalCancel">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn primary">
+                        Guardar estado
+                    </button>
+                </div>
+
+                <div id="liqFormMsg" class="small muted"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="../js/Administracion/admin_core.js"></script>
+    <script src="../js/Administracion/admin_contratos.js"></script>
+    <script src="../js/Administracion/admin_empleados.js"></script>
+    <script src="../js/Administracion/admin_capacitaciones.js"></script>
+    <script src="../js/Administracion/admin_solicitudes.js"></script>
+    <script src="../js/Administracion/admin_asistencia.js"></script>
+    <script src="../js/Administracion/admin_liquidaciones.js"></script>
+    <script src="../js/Administracion/admin_dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/Administracion/admin_reportes.js"></script>
+</body>
+
+</html>
