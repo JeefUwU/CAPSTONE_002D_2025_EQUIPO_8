@@ -1,4 +1,3 @@
-# main.py
 import os
 import re
 from datetime import date
@@ -43,6 +42,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 # ================== ENDPOINTS ==================
 
 
@@ -63,12 +63,6 @@ def get_dashboard_resumen(period: str | None = None):
     """
     Resumen analítico para el dashboard.
     - Si no se pasa ?period=YYYY-MM, usa el mes actual.
-    - Devuelve:
-      * empleados: totales / con contrato vigente
-      * contratos: totales, vigentes, sueldos básicos (promedio, min, max)
-      * liquidaciones: del periodo, stats de sueldo líquido
-      * asistencia: del periodo, por estado y % asistencia
-      * trends: liquidaciones últimos 6 períodos
     """
     try:
         # --- Normalizar período ---
@@ -76,7 +70,6 @@ def get_dashboard_resumen(period: str | None = None):
             hoy = date.today()
             period = f"{hoy.year:04d}-{hoy.month:02d}"
 
-        # Rango de fechas para asistencia (primer día del período → primer día del mes siguiente)
         year = int(period[:4])
         month = int(period[5:7])
         start_date = date(year, month, 1)
@@ -90,7 +83,6 @@ def get_dashboard_resumen(period: str | None = None):
             df_emp = pd.read_sql("SELECT id_empleado FROM empleados", conn)
             total_empleados = int(len(df_emp))
 
-            # Empleados con al menos un contrato vigente (estado = 'vigente')
             df_con_vig_emp = pd.read_sql(
                 text(
                     """
@@ -120,7 +112,6 @@ def get_dashboard_resumen(period: str | None = None):
             )
             total_contratos = int(len(df_con))
 
-            # Defaults por si no hay contratos
             vigentes = 0
             sueldo_prom = 0.0
             sueldo_max = 0.0
@@ -129,28 +120,35 @@ def get_dashboard_resumen(period: str | None = None):
             por_tipo_finiquitados: dict[str, int] = {}
 
             if not df_con.empty:
-                # Cuántos contratos están vigentes (por estado)
+                # Normalizar estado a minúscula por si acaso
+                df_con["estado"] = df_con["estado"].astype(str).str.lower()
+
+                # Cuántos contratos están vigentes
                 vigentes = int((df_con["estado"] == "vigente").sum())
 
                 # Contratos vigentes
                 df_vig = df_con[df_con["estado"] == "vigente"].copy()
                 if not df_vig.empty:
+                    df_vig["sueldo_base_contrato"] = (
+                        pd.to_numeric(df_vig["sueldo_base_contrato"], errors="coerce")
+                        .fillna(0)
+                    )
                     sueldo_prom = float(df_vig["sueldo_base_contrato"].mean())
                     sueldo_max = float(df_vig["sueldo_base_contrato"].max())
                     sueldo_min = float(df_vig["sueldo_base_contrato"].min())
 
-                # Tipos de contratos vigentes
-                por_tipo_vig_raw = df_vig["tipo"].value_counts().to_dict()
-                por_tipo_vigentes = {
-                    str(k): int(v) for k, v in por_tipo_vig_raw.items()
-                }
+                    por_tipo_vig_raw = df_vig["tipo"].value_counts().to_dict()
+                    por_tipo_vigentes = {
+                        str(k): int(v) for k, v in por_tipo_vig_raw.items()
+                    }
 
                 # Contratos finiquitados
                 df_fin = df_con[df_con["estado"] == "finiquitado"].copy()
-                por_tipo_fin_raw = df_fin["tipo"].value_counts().to_dict()
-                por_tipo_finiquitados = {
-                    str(k): int(v) for k, v in por_tipo_fin_raw.items()
-                }
+                if not df_fin.empty:
+                    por_tipo_fin_raw = df_fin["tipo"].value_counts().to_dict()
+                    por_tipo_finiquitados = {
+                        str(k): int(v) for k, v in por_tipo_fin_raw.items()
+                    }
 
             # ---------------- LIQUIDACIONES (PERÍODO) ----------------
             df_liq = pd.read_sql(
@@ -166,6 +164,10 @@ def get_dashboard_resumen(period: str | None = None):
             )
 
             if not df_liq.empty:
+                df_liq["sueldo_liquido"] = pd.to_numeric(
+                    df_liq["sueldo_liquido"], errors="coerce"
+                ).fillna(0)
+
                 cantidad_liq = int(len(df_liq))
                 total_liquido = float(df_liq["sueldo_liquido"].sum())
                 promedio_liquido = float(df_liq["sueldo_liquido"].mean())
@@ -192,9 +194,14 @@ def get_dashboard_resumen(period: str | None = None):
             )
 
             if not df_asistencia.empty:
+                # Normalizar estado a minúsculas
+                df_asistencia["estado"] = (
+                    df_asistencia["estado"].astype(str).str.lower()
+                )
                 total_registros_asistencia = int(len(df_asistencia))
                 por_estado_raw = df_asistencia["estado"].value_counts().to_dict()
                 por_estado = {str(k): int(v) for k, v in por_estado_raw.items()}
+
                 presentes = (
                     por_estado.get("presente", 0)
                     + por_estado.get("ok", 0)
@@ -226,13 +233,16 @@ def get_dashboard_resumen(period: str | None = None):
 
             trends_liq = []
             if not df_trend.empty:
+                df_trend["promedio_liquido"] = pd.to_numeric(
+                    df_trend["promedio_liquido"], errors="coerce"
+                ).fillna(0)
                 df_trend_sorted = df_trend.sort_values("periodo")
                 for _, row in df_trend_sorted.iterrows():
                     trends_liq.append(
                         {
                             "periodo": str(row["periodo"]).strip(),
                             "promedio_liquido": float(row["promedio_liquido"] or 0.0),
-                            "cantidad": int(row["cantidad"]),
+                            "cantidad": int(row["cantidad"] or 0),
                         }
                     )
 
@@ -249,7 +259,6 @@ def get_dashboard_resumen(period: str | None = None):
                 "sueldo_promedio": sueldo_prom,
                 "sueldo_minimo": sueldo_min,
                 "sueldo_maximo": sueldo_max,
-                # para gráficos de reportes:
                 "por_tipo_vigentes": por_tipo_vigentes,
                 "por_tipo_finiquitados": por_tipo_finiquitados,
             },
@@ -271,6 +280,7 @@ def get_dashboard_resumen(period: str | None = None):
                 "liquidaciones_ultimos_6m": trends_liq,
             },
         }
+
     except Exception as e:
         print("❌ ERROR_GET_DASHBOARD_RESUMEN", e)
         raise HTTPException(
